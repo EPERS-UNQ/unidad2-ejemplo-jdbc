@@ -4,8 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import ar.edu.unq.unidad1.wop.modelo.exception.MuchoPesoException;
 
+@XStreamAlias("personaje")
+@JsonAutoDetect(creatorVisibility = Visibility.ANY, fieldVisibility = Visibility.ANY)
 public class Personaje implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -16,15 +22,16 @@ public class Personaje implements Serializable {
 	
 	private Set<Item> inventario = new HashSet<>();
 	
+	private Personaje() {
+	}
+	
 	public Personaje(String nombre) {
+		this();
 		this.nombre = nombre;
 	}
 	
 	public String getNombre() {
 		return this.nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public int getPesoMaximo() {
@@ -46,6 +53,13 @@ public class Personaje implements Serializable {
 	}
 	public void setVida(int vida) {
 		this.vida = vida;
+	}
+	
+	public Set<Item> getInventario() {
+		return this.inventario;
+	}
+	public void setInventario(Set<Item> inventario) {
+		this.inventario = inventario;
 	}
 
 	public void recoger(Item item) {

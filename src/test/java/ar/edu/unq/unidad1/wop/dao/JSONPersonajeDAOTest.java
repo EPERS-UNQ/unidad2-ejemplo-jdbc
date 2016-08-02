@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.unq.unidad1.wop.dao.impl.NativePersonajeDAO;
+import ar.edu.unq.unidad1.wop.dao.impl.JSONPersonajeDAO;
 import ar.edu.unq.unidad1.wop.modelo.Item;
 import ar.edu.unq.unidad1.wop.modelo.Personaje;
 
@@ -21,9 +21,9 @@ import ar.edu.unq.unidad1.wop.modelo.Personaje;
  * 
  * @author Claudio Fernandez
  */
-public class NativePersonajeDAOTest {
+public class JSONPersonajeDAOTest {
 	
-	private PersonajeDAO dao = new NativePersonajeDAO();
+	private PersonajeDAO dao = new JSONPersonajeDAO();
 	private Personaje maguito;
 	
 	@Before
