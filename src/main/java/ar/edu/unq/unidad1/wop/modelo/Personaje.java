@@ -4,14 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 import ar.edu.unq.unidad1.wop.modelo.exception.MuchoPesoException;
 
-@XStreamAlias("personaje")
-@JsonAutoDetect(creatorVisibility = Visibility.ANY, fieldVisibility = Visibility.ANY)
 public class Personaje implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,11 +16,7 @@ public class Personaje implements Serializable {
 	
 	private Set<Item> inventario = new HashSet<>();
 	
-	private Personaje() {
-	}
-	
 	public Personaje(String nombre) {
-		this();
 		this.nombre = nombre;
 	}
 	

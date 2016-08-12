@@ -93,7 +93,8 @@ public class JDBCPersonajeDAO implements PersonajeDAO {
 	 */
 	private Connection openConnection(String url) {
 		try {
-			return DriverManager.getConnection("jdbc:mysql://localhost:8889/epers-1?user=root&password=root");
+			//La url de conexion no deberia estar harcodeada aca
+			return DriverManager.getConnection("jdbc:mysql://localhost:3307/epers_ejemplo_jdbc?user=root&password=root");
 		} catch (SQLException e) {
 			throw new RuntimeException("No se puede establecer una conexion", e);
 		}
