@@ -10,8 +10,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jackson.version>2.8.1</jackson.version>
-		<xstream.version>1.4.9</xstream.version>
 	</properties>
 
 	<dependencies>
