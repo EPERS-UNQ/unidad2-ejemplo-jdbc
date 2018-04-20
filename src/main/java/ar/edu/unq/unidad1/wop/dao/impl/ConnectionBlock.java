@@ -10,12 +10,11 @@ import java.sql.SQLException;
  * y puede arrojar excepciones de tipo {@link SQLException} (toda la
  * API de JDBC arroja {@link SQLException}, tipicamente querremos
  * manejarlas de forma generica)
- * 
- * @author Claudio Fernandez
+ *
  */
 @FunctionalInterface
 public interface ConnectionBlock<T> {
 	
-	public T executeWith(Connection conn) throws SQLException;
+	T executeWith(Connection conn) throws SQLException;
 	
 }

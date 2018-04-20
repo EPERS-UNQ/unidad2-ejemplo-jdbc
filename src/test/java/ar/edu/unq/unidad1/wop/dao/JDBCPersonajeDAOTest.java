@@ -10,12 +10,7 @@ import ar.edu.unq.unidad1.wop.dao.impl.JDBCPersonajeDAO;
 import ar.edu.unq.unidad1.wop.modelo.Item;
 import ar.edu.unq.unidad1.wop.modelo.Personaje;
 
-/**
- * TODO: Esta implementcion depende de que exista una
- * base de datos corriendo.
- * 
- * @author Claudio Fernandez
- */
+
 public class JDBCPersonajeDAOTest {
 	
 	private PersonajeDAO dao = new JDBCPersonajeDAO();
@@ -41,7 +36,7 @@ public class JDBCPersonajeDAOTest {
 		assertEquals(this.maguito.getPesoMaximo(), otroMaguito.getPesoMaximo());
 		assertEquals(this.maguito.getVida(), otroMaguito.getVida());
 		assertEquals(this.maguito.getXp(), otroMaguito.getXp());
-		//assertEquals(this.maguito.getInventario().size(), otroMaguito.getInventario().size());
+//		assertEquals(this.maguito.getInventario().size(), otroMaguito.getInventario().size());
 		
 		//Pero no son el mismo objeto =(
 		//A esto nos referimos con "perdida de identidad"

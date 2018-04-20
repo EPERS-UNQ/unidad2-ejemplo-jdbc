@@ -12,17 +12,11 @@ import ar.edu.unq.unidad1.wop.modelo.Personaje;
 /**
  * Una implementacion de {@link PersonajeDAO} que persiste
  * en una base de datos relacional utilizando JDBC
- * 
- * @author Claudio Fernandez
+ *
  */
 public class JDBCPersonajeDAO implements PersonajeDAO {
 
 	public JDBCPersonajeDAO() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("No se puede encontrar la clase del driver", e);
-		}
 	}
 
 	@Override
@@ -56,7 +50,7 @@ public class JDBCPersonajeDAO implements PersonajeDAO {
 			Personaje personaje = null;
 			while (resultSet.next()) {
 				//si personaje no es null aca significa que el while dio mas de una vuelta, eso
-				//suele passar cuando el resultado (resultset) tiene mas de un elemento.
+				//suele pasar cuando el resultado (resultset) tiene mas de un elemento.
 				if (personaje != null) {
 					throw new RuntimeException("Existe mas de un personaje con el nombre " + nombre);
 				}
@@ -76,7 +70,7 @@ public class JDBCPersonajeDAO implements PersonajeDAO {
 	 * Ejecuta un bloque de codigo contra una conexion.
 	 */
 	private <T> T executeWithConnection(ConnectionBlock<T> bloque) {
-		Connection connection = this.openConnection("jdbc:mysql://localhost:8889/epers-1?user=root&password=root");
+		Connection connection = this.openConnection();
 		try {
 			return bloque.executeWith(connection);
 		} catch (SQLException e) {
@@ -88,13 +82,12 @@ public class JDBCPersonajeDAO implements PersonajeDAO {
 
 	/**
 	 * Establece una conexion a la url especificada
-	 * @param url - la url de conexion a la base de datos
 	 * @return la conexion establecida
 	 */
-	private Connection openConnection(String url) {
+	private Connection openConnection() {
 		try {
 			//La url de conexion no deberia estar harcodeada aca
-			return DriverManager.getConnection("jdbc:mysql://localhost:3307/epers_ejemplo_jdbc?user=root&password=root");
+			return DriverManager.getConnection("jdbc:mysql://localhost:3306/epers_ejemplo_jdbc?user=root&password=root");
 		} catch (SQLException e) {
 			throw new RuntimeException("No se puede establecer una conexion", e);
 		}
