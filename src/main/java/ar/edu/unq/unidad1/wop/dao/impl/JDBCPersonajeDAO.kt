@@ -3,8 +3,7 @@ package ar.edu.unq.unidad1.wop.dao.impl
 import ar.edu.unq.unidad1.wop.dao.PersonajeDAO
 import ar.edu.unq.unidad1.wop.modelo.Personaje
 import java.sql.Connection
-import java.sql.DriverManager
-import java.sql.SQLException
+import ar.edu.unq.unidad1.wop.dao.impl.JDBCConnector.execute
 
 /**
  * Una implementacion de [PersonajeDAO] que persiste
@@ -13,7 +12,7 @@ import java.sql.SQLException
 class JDBCPersonajeDAO : PersonajeDAO {
 
     override fun guardar(personaje: Personaje) {
-        executeWithConnection { conn: Connection ->
+        execute { conn: Connection ->
             val ps =
                 conn.prepareStatement("INSERT INTO personaje (nombre, pesoMaximo, xp, vida) VALUES (?,?,?,?)")
             ps.setString(1, personaje!!.nombre)
@@ -31,7 +30,7 @@ class JDBCPersonajeDAO : PersonajeDAO {
     }
 
     override fun recuperar(nombre: String): Personaje {
-        return executeWithConnection{ conn: Connection ->
+        return execute{ conn: Connection ->
             val ps = conn.prepareStatement("SELECT pesoMaximo, xp, vida FROM personaje WHERE nombre = ?")
             ps.setString(1, nombre)
             val resultSet = ps.executeQuery()
@@ -52,54 +51,23 @@ class JDBCPersonajeDAO : PersonajeDAO {
         }
     }
 
-    /**
-     * Ejecuta un bloque de codigo contra una conexion.
-     */
-    private fun <T> executeWithConnection(bloque: (Connection)->T): T {
-        val connection = openConnection()
-        return try {
-            bloque(connection)
-        } catch (e: SQLException) {
-            throw RuntimeException("Error no esperado", e)
-        } finally {
-            closeConnection(connection)
+    override fun eliminar(personaje: Personaje) {
+        execute { conn: Connection ->
+            val ps =  conn.prepareStatement("DELETE FROM personaje WHERE nombre =  ? ")
+            ps.setString(1, personaje.nombre)
+            ps.execute()
+            if (ps.updateCount != 1) {
+                throw RuntimeException("No se eliminó el personaje $personaje")
+            }
+            ps.close()
+            null
         }
     }
 
-    /**
-     * Establece una conexion a la url especificada
-     *
-     * @return la conexion establecida
-     */
-    private fun openConnection(): Connection {
-        val env = System.getenv()
-        val user = env.getOrDefault("user", "root")
-        val password = env.getOrDefault("password", "root")
-        val host = env.getOrDefault("host", "localhost")
-        val dataBase = env.getOrDefault("dataBase", "epers_ejemplo_jdbc")
-        return try {
-            DriverManager.getConnection("jdbc:mysql://$host:3306/$dataBase?user=$user&password=$password&useSSL=false&createDatabaseIfNotExist=true")
-        } catch (e: SQLException) {
-            throw RuntimeException("No se puede establecer una conexion", e)
-        }
-    }
-
-    /**
-     * Cierra una conexion con la base de datos (libera los recursos utilizados por la misma)
-     *
-     * @param connection - la conexion a cerrar.
-     */
-    private fun closeConnection(connection: Connection) {
-        try {
-            connection.close()
-        } catch (e: SQLException) {
-            throw RuntimeException("Error al cerrar la conexion", e)
-        }
-    }
 
     init {
         val initializeScript = javaClass.classLoader.getResource("createAll.sql").readText()
-        executeWithConnection{
+        execute {
             val ps = it.prepareStatement(initializeScript)
             ps.execute()
             ps.close()

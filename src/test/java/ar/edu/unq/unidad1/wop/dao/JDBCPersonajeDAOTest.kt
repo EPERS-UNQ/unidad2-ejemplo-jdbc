@@ -3,6 +3,7 @@ package ar.edu.unq.unidad1.wop.dao
 import ar.edu.unq.unidad1.wop.dao.impl.JDBCPersonajeDAO
 import ar.edu.unq.unidad1.wop.modelo.Item
 import ar.edu.unq.unidad1.wop.modelo.Personaje
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -22,7 +23,7 @@ class JDBCPersonajeDAOTest {
     }
 
     @Test
-    fun al_guardar_y_luego_recuperar_se_obtiene_objetos_similares() {
+    fun alGuardarYLuegoRecuperarSeObtieneObjetosSimilares() {
         dao.guardar(maguito)
 
         //Los personajes son iguales
@@ -36,5 +37,10 @@ class JDBCPersonajeDAOTest {
         //Pero no son el mismo objeto =(
         //A esto nos referimos con "perdida de identidad"
         Assert.assertTrue(maguito !== otroMaguito)
+    }
+
+    @After
+    fun emilinarModelo() {
+        dao.eliminar(maguito)
     }
 }

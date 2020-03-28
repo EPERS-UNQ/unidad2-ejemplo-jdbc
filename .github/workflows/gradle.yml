@@ -21,27 +21,27 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Extraer nombre del tag
+        run: fullTagName=${{ github.ref }} && path='refs/tags/' && a='' && tagName=${fullTagName/$path/$a} && echo $tagName && echo "##[set-output name=tagName;]$tagName"
+        id: tagName
       - name: Make Gradle executable
         run: chmod +x ./gradlew
       - name: Run tests
-        run: ./gradlew test
+        run: ./gradlew test -i
         env:
           USER: ${{ secrets.USER }}
           PASSWORD: ${{ secrets.PASSWORD }}
           DATA_BASE: ${{ secrets.DATA_BASE }}
           HOST: ${{ secrets.HOST }}
-      - name: Extraer nombre del tag
-        run: fullTagName=${{ github.ref }} && path='refs/tags/' && a='' && tagName=${fullTagName/$path/$a} && echo "##[set-output name=tagName;]${tagName}"
-        id: tagName
       - name: Success notification
         if: success()
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          DISCORD_USERNAME: ${{ steps.tagName.outputs.tagName }}
+          DISCORD_USERNAME: ${{ github.repository }}
           DISCORD_AVATAR: https://www.iconsdb.com/icons/preview/green/github-9-xxl.png
         uses: EPERS-UNQ/action-discord@master
         with:
-          fields: '[{"name":"Proyecto",  "value":" [{{ EVENT_PAYLOAD.repository.name }}]({{ EVENT_PAYLOAD.repository.url }}) ", "inline": true}, {"name":"Tag",  "value":" ${{ steps.tagName.outputs.tagName }}", "inline": true}]'
+          fields: '[{"name":"Proyecto",  "value":" [{{ EVENT_PAYLOAD.repository.name }}]({{ EVENT_PAYLOAD.repository.url }}) ", "inline": true}, {"name":"Tag",  "value":"[${{ steps.tagName.outputs.tagName }}](https://github.com/${{ github.repository }}/releases/tag/${{ steps.tagName.outputs.tagName }})", "inline": true}]'
           title: ':green_circle: Entrega existosa'
           color: 3258062
           author: true
@@ -50,11 +50,11 @@ jobs:
         if: failure()
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          DISCORD_USERNAME: ${{ steps.tagName.outputs.tagName }}
+          DISCORD_USERNAME: ${{ github.repository }}
           DISCORD_AVATAR: https://www.iconsdb.com/icons/preview/red/github-10-xxl.png
         uses: EPERS-UNQ/action-discord@master
         with:
-          fields: '[{"name":"Proyecto",  "value":" [{{ EVENT_PAYLOAD.repository.name }}]({{ EVENT_PAYLOAD.repository.url }}) ", "inline": true},{"name":"Tag",  "value":" ${{ steps.tagName.outputs.tagName }}", "inline": true}]'
+          fields: '[{"name":"Proyecto",  "value":" [{{ EVENT_PAYLOAD.repository.name }}]({{ EVENT_PAYLOAD.repository.url }}) ", "inline": true},{"name":"Tag",  "value":"[${{ steps.tagName.outputs.tagName }}](https://github.com/${{ github.repository }}/releases/tag/${{ steps.tagName.outputs.tagName }})", "inline": true}]'
           title: ':red_circle: Entrega fallida '
           color: 9503748
           author: true

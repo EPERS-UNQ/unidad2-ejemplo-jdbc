@@ -9,4 +9,5 @@ import ar.edu.unq.unidad1.wop.modelo.Personaje
 interface PersonajeDAO {
     fun guardar(personaje: Personaje)
     fun recuperar(nombre: String): Personaje
+    fun eliminar(personaje: Personaje)
 }
