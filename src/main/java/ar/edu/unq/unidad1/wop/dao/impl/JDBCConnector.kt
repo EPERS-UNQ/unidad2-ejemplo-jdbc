@@ -11,13 +11,7 @@ object JDBCConnector {
      */
     fun <T> execute(bloque: (Connection)->T): T {
         val connection = openConnection()
-        return try {
-            bloque(connection)
-        } catch (e: SQLException) {
-            throw RuntimeException("Error no esperado", e)
-        } finally {
-            closeConnection(connection)
-        }
+        return connection.use(bloque)
     }
 
     /**
@@ -31,8 +25,9 @@ object JDBCConnector {
         val password = env.getOrDefault("PASSWORD", "root")
         val host = env.getOrDefault("HOST", "localhost")
         val dataBase = env.getOrDefault("DATA_BASE", "epers_ejemplo_jdbc")
+
         return try {
-            val url = "jdbc:mysql://$host:3306/$dataBase?user=$user&password=$password&useSSL=false&createDatabaseIfNotExist=true"
+            val url = "jdbc:mysql://$host:3306/$dataBase?user=$user&password=$password&useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true"
             DriverManager.getConnection(url)
         } catch (e: SQLException) {
             throw RuntimeException("No se puede establecer una conexion", e)

@@ -39,6 +39,7 @@ class JDBCPersonajeDAOTest {
         Assert.assertTrue(maguito !== otroMaguito)
     }
 
+
     @After
     fun emilinarModelo() {
         dao.eliminar(maguito)

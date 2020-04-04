@@ -15,7 +15,7 @@ class JDBCPersonajeDAO : PersonajeDAO {
         execute { conn: Connection ->
             val ps =
                 conn.prepareStatement("INSERT INTO personaje (nombre, pesoMaximo, xp, vida) VALUES (?,?,?,?)")
-            ps.setString(1, personaje!!.nombre)
+            ps.setString(1, personaje.nombre)
             ps.setInt(2, personaje.pesoMaximo)
             ps.setInt(3, personaje.xp)
             ps.setInt(4, personaje.vida)
@@ -30,7 +30,7 @@ class JDBCPersonajeDAO : PersonajeDAO {
     }
 
     override fun recuperar(nombre: String): Personaje {
-        return execute{ conn: Connection ->
+        return execute { conn: Connection ->
             val ps = conn.prepareStatement("SELECT pesoMaximo, xp, vida FROM personaje WHERE nombre = ?")
             ps.setString(1, nombre)
             val resultSet = ps.executeQuery()
