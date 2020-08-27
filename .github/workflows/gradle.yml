@@ -29,10 +29,7 @@ jobs:
       - name: Run tests
         run: ./gradlew test -i
         env:
-          USER: ${{ secrets.USER }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          DATA_BASE: ${{ secrets.DATA_BASE }}
-          HOST: ${{ secrets.HOST }}
+          SQL_URL: ${{ secrets.SQL_URL }}
       - name: Success notification
         if: success()
         env:
