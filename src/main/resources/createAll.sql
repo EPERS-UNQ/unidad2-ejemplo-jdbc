@@ -5,5 +5,4 @@ CREATE TABLE IF NOT EXISTS personaje (
   xp int NOT NULL,
   vida int NOT NULL,
   PRIMARY KEY (id)
-)
-ENGINE = InnoDB;
+);

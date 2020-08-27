@@ -19,6 +19,7 @@ dependencies {
     testCompile group: 'io.kotlintest', name: 'kotlintest-runner-junit4', version: '3.4.2'
 
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.19'
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
 }
 
 compileKotlin {

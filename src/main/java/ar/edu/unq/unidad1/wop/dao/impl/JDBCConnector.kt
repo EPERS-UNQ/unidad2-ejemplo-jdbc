@@ -21,13 +21,13 @@ object JDBCConnector {
      */
     private fun openConnection(): Connection {
         val env = System.getenv()
-        val user = env.getOrDefault("USER", "root")
-        val password = env.getOrDefault("PASSWORD", "root")
-        val host = env.getOrDefault("HOST", "localhost")
-        val dataBase = env.getOrDefault("DATA_BASE", "epers_ejemplo_jdbc")
+        val user = "root"
+        val password = "root"
+        val host = "localhost"
+        val dataBase = "epers_ejemplo_jdbc"
+        val url = env.getOrDefault("SQL_URL", "jdbc:mysql://$host:3306/$dataBase?user=$user&password=$password&useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true")
 
         return try {
-            val url = "jdbc:mysql://$host:3306/$dataBase?user=$user&password=$password&useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true"
             DriverManager.getConnection(url)
         } catch (e: SQLException) {
             throw RuntimeException("No se puede establecer una conexion", e)
