@@ -1,10 +1,9 @@
 package ar.edu.unq.unidad1.wop.modelo
 
 import ar.edu.unq.unidad1.wop.modelo.exception.MuchoPesoException
-import java.io.Serializable
 import java.util.*
 
-class Personaje(val nombre: String) : Serializable {
+class Personaje(val nombre: String)  {
     var pesoMaximo = 0
     var xp = 0
     var vida = 0
