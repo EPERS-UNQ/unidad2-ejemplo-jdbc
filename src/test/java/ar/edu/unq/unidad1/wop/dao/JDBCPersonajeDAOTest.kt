@@ -3,12 +3,10 @@ package ar.edu.unq.unidad1.wop.dao
 import ar.edu.unq.unidad1.wop.dao.impl.JDBCPersonajeDAO
 import ar.edu.unq.unidad1.wop.modelo.Item
 import ar.edu.unq.unidad1.wop.modelo.Personaje
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 
-
+@TestInstance(PER_CLASS)
 class JDBCPersonajeDAOTest {
     private val dao: PersonajeDAO = JDBCPersonajeDAO()
     lateinit var maguito: Personaje
