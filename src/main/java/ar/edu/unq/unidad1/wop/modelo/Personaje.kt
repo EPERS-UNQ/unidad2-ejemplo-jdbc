@@ -3,7 +3,7 @@ package ar.edu.unq.unidad1.wop.modelo
 import ar.edu.unq.unidad1.wop.modelo.exception.MuchoPesoException
 import java.util.*
 
-class Personaje(val nombre: String)  {
+class Personaje(var nombre: String)  {
     var pesoMaximo = 0
     var xp = 0
     var vida = 0

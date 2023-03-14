@@ -3,16 +3,17 @@ package ar.edu.unq.unidad1.wop.dao
 import ar.edu.unq.unidad1.wop.dao.impl.JDBCPersonajeDAO
 import ar.edu.unq.unidad1.wop.modelo.Item
 import ar.edu.unq.unidad1.wop.modelo.Personaje
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+
 
 class JDBCPersonajeDAOTest {
     private val dao: PersonajeDAO = JDBCPersonajeDAO()
     lateinit var maguito: Personaje
 
-    @Before
+    @BeforeEach
     fun crearModelo() {
         maguito = Personaje("Maguito")
         maguito.pesoMaximo = 15
@@ -28,19 +29,19 @@ class JDBCPersonajeDAOTest {
 
         //Los personajes son iguales
         val otroMaguito = dao.recuperar("Maguito")
-        Assert.assertEquals(maguito.nombre, otroMaguito.nombre)
-        Assert.assertEquals(maguito.pesoMaximo.toLong(), otroMaguito.pesoMaximo.toLong())
-        Assert.assertEquals(maguito.vida.toLong(), otroMaguito.vida.toLong())
-        Assert.assertEquals(maguito.xp.toLong(), otroMaguito.xp.toLong())
+        Assertions.assertEquals(maguito.nombre, otroMaguito.nombre)
+        Assertions.assertEquals(maguito.pesoMaximo.toLong(), otroMaguito.pesoMaximo.toLong())
+        Assertions.assertEquals(maguito.vida.toLong(), otroMaguito.vida.toLong())
+        Assertions.assertEquals(maguito.xp.toLong(), otroMaguito.xp.toLong())
         //		assertEquals(this.maguito.getInventario().size(), otroMaguito.getInventario().size());
 
         //Pero no son el mismo objeto =(
         //A esto nos referimos con "perdida de identidad"
-        Assert.assertTrue(maguito !== otroMaguito)
+        Assertions.assertTrue(maguito !== otroMaguito)
     }
 
 
-    @After
+    @AfterEach
     fun emilinarModelo() {
         dao.eliminar(maguito)
     }

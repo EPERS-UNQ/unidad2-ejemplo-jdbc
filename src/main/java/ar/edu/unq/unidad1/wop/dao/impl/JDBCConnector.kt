@@ -30,7 +30,7 @@ object JDBCConnector {
         return try {
             DriverManager.getConnection(url)
         } catch (e: SQLException) {
-            throw RuntimeException("No se puede establecer una conexion", e)
+            throw RuntimeException("No se puede establecer una conexion. Revisar si el servidor SQL esta corriendo.", e)
         }
     }
 
