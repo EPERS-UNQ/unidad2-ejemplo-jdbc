@@ -18,17 +18,33 @@ class Personaje(var nombre: String)  {
         inventario.add(item)
     }
 
-    val pesoActual: Int
-        get() {
-            var pesoActual = 0
-            for (item in inventario) {
-                pesoActual += item.peso
-            }
-            return pesoActual
+    fun pesoActual() : Int {
+        var pesoActual = 0
+        for (item in inventario) {
+            pesoActual += item.peso
         }
+        return pesoActual
+    }
+
+    /*
+        Podemos crear getters personalizados sin la necesidad de crear metodos (como en Java) haciendo uso de la siguiente sintaxis
+        val pesoActual: Int
+            get() {
+                var pesoActual = 0
+                for (item in inventario) {
+                    pesoActual += item.peso
+                }
+                return pesoActual
+            }
+    */
 
     override fun toString(): String {
         return nombre
     }
+
+    /*
+        Podemos crear metodos con un estilo más funcional de la siguiente manera
+        override fun toString() : String = nombre
+    */
 
 }

@@ -32,6 +32,7 @@ class JDBCPersonajeDAO : PersonajeDAO {
                     ps.setString(1, nombre)
                     val resultSet = ps.executeQuery()
                     var personaje: Personaje? = null
+                    // resultSet empieza en [-1], next lo mueve un lugar e indica si existe elemento o no en la nueva posición
                     while (resultSet.next()) {
                         //si personaje no es null aca significa que el while dio mas de una vuelta, eso
                         //suele pasar cuando el resultado (resultset) tiene mas de un elemento.

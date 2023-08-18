@@ -14,9 +14,11 @@ class JDBCPersonajeDAOTest {
     @BeforeEach
     fun crearModelo() {
         maguito = Personaje("Maguito")
-        maguito.pesoMaximo = 15
-        maguito.vida = 198
-        maguito.xp = 2500
+        maguito.apply {
+            pesoMaximo = 15
+            vida = 198
+            xp = 2500
+        }
         maguito.recoger(Item("Tunica gris", 1))
         maguito.recoger(Item("Baculo gris", 5))
     }
