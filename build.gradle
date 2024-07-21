@@ -1,34 +1,24 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.8.0'
 }
 
 group 'ar.edu.unq.unidad2'
 version '1.0-SNAPSHOT'
-
-sourceCompatibility = 11
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation group: 'io.kotlintest', name: 'kotlintest-runner-junit5', version: '3.4.2'
-
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.9.2'
 
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
 }
 
 tasks.test {
     useJUnitPlatform()
 }
 
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "11"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "11"
-}
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
