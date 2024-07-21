@@ -27,7 +27,7 @@ public class JDBCPersonajeDAOTest {
     }
 
     @Test
-    void alGuardarYLuegoRecuperarSeObtieneObjetosSimilares() throws Exception {
+    void alGuardarYLuegoRecuperarSeObtieneObjetosSimilares() {
         dao.guardar(maguito);
 
         //Los personajes son iguales
@@ -45,7 +45,7 @@ public class JDBCPersonajeDAOTest {
 
 
     @AfterEach
-    void emilinarModelo() throws Exception {
+    void emilinarModelo() {
         dao.eliminar(maguito);
     }
 }

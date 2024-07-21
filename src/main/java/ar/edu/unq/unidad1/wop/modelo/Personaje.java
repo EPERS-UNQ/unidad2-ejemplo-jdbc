@@ -14,11 +14,7 @@ public record Personaje(String nombre, Integer pesoMaximo, Integer xp, Integer v
     }
 
     public Integer getPesoActual() {
-        var pesoActual = 0;
-        for (Item item : inventario) {
-            pesoActual += item.peso();
-        }
-        return pesoActual;
+        return inventario.stream().mapToInt(Item::peso).sum();
     }
 
 }
