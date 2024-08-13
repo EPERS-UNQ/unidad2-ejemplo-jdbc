@@ -2,13 +2,22 @@ package ar.edu.unq.unidad1.wop.modelo;
 
 import java.io.Serializable;
 
-/*
- * Los records ya implementan:
- *  equals, hashcode,
- *  private final para todos los fields
- *  toString con className + atributos
- *  getters para todos los fields
- *
- *  Todos los records son inmutables por definición.
- */
-public record Item(String nombre, Integer peso) implements Serializable { }
+
+public class Item implements Serializable {
+
+    private String nombre;
+    private Integer peso;
+
+    public Item(String nombre, Integer peso) {
+        this.nombre = nombre;
+        this.peso = peso;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Integer getPeso() {
+        return peso;
+    }
+}

@@ -20,10 +20,10 @@ public record JDBCPersonajeDAO() implements PersonajeDAO {
         JDBCConnector.getInstance().execute(conn  -> {
             try {
                 var ps = conn.prepareStatement("INSERT INTO personaje (nombre, pesoMaximo, xp, vida) VALUES (?,?,?,?)");
-                ps.setString(1, personaje.nombre());
-                ps.setInt(2, personaje.pesoMaximo());
-                ps.setInt(3, personaje.xp());
-                ps.setInt(4, personaje.vida());
+                ps.setString(1, personaje.getNombre());
+                ps.setInt(2, personaje.getPesoMaximo());
+                ps.setInt(3, personaje.getXp());
+                ps.setInt(4, personaje.getVida());
                 //ojo, no estamos guardando el inventario!
                 return ps.execute();
             } catch (SQLException e) {
@@ -63,7 +63,7 @@ public record JDBCPersonajeDAO() implements PersonajeDAO {
         JDBCConnector.getInstance().execute (conn -> {
             try {
                 var ps = conn.prepareStatement("DELETE FROM personaje WHERE nombre =  ? ");
-                ps.setString(1, personaje.nombre());
+                ps.setString(1, personaje.getNombre());
                 return ps.execute();
             } catch (SQLException e) {
                 throw new RuntimeException(e);

@@ -32,10 +32,10 @@ public class JDBCPersonajeDAOTest {
 
         //Los personajes son iguales
         var otroMaguito = dao.recuperar("Maguito");
-        Assertions.assertEquals(maguito.nombre(), otroMaguito.nombre());
-        Assertions.assertEquals(maguito.pesoMaximo(), otroMaguito.pesoMaximo());
-        Assertions.assertEquals(maguito.vida(), otroMaguito.vida());
-        Assertions.assertEquals(maguito.xp(), otroMaguito.xp());
+        Assertions.assertEquals(maguito.getNombre(), otroMaguito.getNombre());
+        Assertions.assertEquals(maguito.getPesoMaximo(), otroMaguito.getPesoMaximo());
+        Assertions.assertEquals(maguito.getVida(), otroMaguito.getVida());
+        Assertions.assertEquals(maguito.getXp(), otroMaguito.getXp());
         //		assertEquals(this.maguito.getInventario().size(), otroMaguito.getInventario().size());
 
         //Pero no son el mismo objeto =(
