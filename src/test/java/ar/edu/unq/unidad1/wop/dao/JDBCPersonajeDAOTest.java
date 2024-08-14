@@ -3,13 +3,15 @@ package ar.edu.unq.unidad1.wop.dao;
 import ar.edu.unq.unidad1.wop.dao.impl.JDBCPersonajeDAO;
 import ar.edu.unq.unidad1.wop.modelo.Item;
 import ar.edu.unq.unidad1.wop.modelo.Personaje;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestInstance(PER_CLASS)
 public class JDBCPersonajeDAOTest {
     private PersonajeDAO dao = new JDBCPersonajeDAO();
     private Personaje maguito;
@@ -32,11 +34,11 @@ public class JDBCPersonajeDAOTest {
 
         //Los personajes son iguales
         var otroMaguito = dao.recuperar("Maguito");
-        Assertions.assertEquals(maguito.getNombre(), otroMaguito.getNombre());
-        Assertions.assertEquals(maguito.getPesoMaximo(), otroMaguito.getPesoMaximo());
-        Assertions.assertEquals(maguito.getVida(), otroMaguito.getVida());
-        Assertions.assertEquals(maguito.getXp(), otroMaguito.getXp());
-        //		assertEquals(this.maguito.getInventario().size(), otroMaguito.getInventario().size());
+        assertEquals(maguito.getNombre(), otroMaguito.getNombre());
+        assertEquals(maguito.getPesoMaximo(), otroMaguito.getPesoMaximo());
+        assertEquals(maguito.getVida(), otroMaguito.getVida());
+        assertEquals(maguito.getXp(), otroMaguito.getXp());
+//        assertEquals(this.maguito.getInventario().size(), otroMaguito.getInventario().size());
 
         //Pero no son el mismo objeto =(
         //A esto nos referimos con "perdida de identidad"
