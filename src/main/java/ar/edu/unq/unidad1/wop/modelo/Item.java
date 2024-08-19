@@ -1,8 +1,5 @@
 package ar.edu.unq.unidad1.wop.modelo;
 
-import java.io.Serializable;
-
-
 public class Item {
 
     private String nombre;
