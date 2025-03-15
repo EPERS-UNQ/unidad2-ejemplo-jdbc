@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.function.Function;
 
+import static java.util.logging.Level.*;
+import static java.util.logging.Logger.getLogger;
+
 public class JDBCConnector {
 
     private static JDBCConnector INSTANCE = null;
@@ -62,10 +65,12 @@ public class JDBCConnector {
         final var port = env.getOrDefault("DB_PORT", "5432");
         final var url = env.getOrDefault(
                 "SQL_URL", String.format(
-                        "jdbc:postgresql://%s:%s/%s",
+                        "jdbc:postgresql://%s:%s/%s?loggerLevel=DEBUG&loggerFile=postgresql.log",
                         host, port, dataBase)
         );
 
+        getLogger("org.postgresql").setLevel(FINEST);
+        
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
