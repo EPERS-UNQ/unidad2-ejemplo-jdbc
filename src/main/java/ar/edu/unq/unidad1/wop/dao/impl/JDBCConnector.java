@@ -22,9 +22,25 @@ public class JDBCConnector {
      */
     public <T> T execute(Function<Connection, T> bloque) {
         final var connection = openConnection();
+        T result = null;
         try {
-            return bloque.apply(connection);
+            // Para que no haga commit despues de cada sentencia
+            // el driver por defecto hace BEGIN cuando abrimos sesion
+            connection.setAutoCommit(false);
+            
+            // Ejecutamos el bloque
+            result = bloque.apply(connection);
+            
+            // Si llegamos aquí sin excepciones, hacemos commit
+            connection.commit();
+            return result;
         } catch(Exception e) {
+            try {
+                // Si hubo algún error, hacemos rollback
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException("Error al hacer rollback de la transacción", ex);
+            }
             throw new RuntimeException(e);
         } finally {
             closeConnection(connection);
