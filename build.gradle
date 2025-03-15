@@ -12,8 +12,7 @@ repositories {
 dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.9.2'
 
-    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
-
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.2'
 }
 
 tasks.test {

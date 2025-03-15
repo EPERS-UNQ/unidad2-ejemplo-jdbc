@@ -39,20 +39,21 @@ public class JDBCConnector {
      */
     private Connection openConnection() {
         final var env = System.getenv();
-        final var user = "root";
-        final var password = "root";
-        final var host = "localhost";
-        final var dataBase = "epers_ejemplo_jdbc";
+        final var user = env.getOrDefault("DB_USER", "postgres");
+        final var password = env.getOrDefault("DB_PASSWORD", "root");
+        final var host = env.getOrDefault("DB_HOST", "localhost");
+        final var dataBase = env.getOrDefault("DB_NAME", "epers_ejemplo_jdbc");
+        final var port = env.getOrDefault("DB_PORT", "5432");
         final var url = env.getOrDefault(
                 "SQL_URL", String.format(
-                        "jdbc:mysql://%s:3306/%s?user=%s&password=%s&useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true",
-                        host, dataBase, user, password)
+                        "jdbc:postgresql://%s:%s/%s",
+                        host, port, dataBase)
         );
 
         try {
-            return DriverManager.getConnection(url);
+            return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            throw new RuntimeException("No se puede establecer una conexion. Revisar si el servidor SQL esta corriendo.", e);
+            throw new RuntimeException("No se puede establecer una conexion. Revisar si el servidor PostgreSQL esta corriendo.", e);
         }
     }
 
