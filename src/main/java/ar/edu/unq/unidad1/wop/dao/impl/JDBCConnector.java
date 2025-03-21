@@ -63,20 +63,39 @@ public class JDBCConnector {
         final var host = env.getOrDefault("DB_HOST", "localhost");
         final var dataBase = env.getOrDefault("DB_NAME", "epers_ejemplo_jdbc");
         final var port = env.getOrDefault("DB_PORT", "5432");
-        final var url = env.getOrDefault(
-                "SQL_URL", String.format(
-                        "jdbc:postgresql://%s:%s/%s?loggerLevel=DEBUG&loggerFile=postgresql.log",
-                        host, port, dataBase)
+
+        createDatabaseIfNotExists(dataBase, user, password, host, port);
+
+        final var url = String.format(
+                "jdbc:postgresql://%s:%s/%s?loggerLevel=DEBUG&loggerFile=postgresql.log",
+                host, port, dataBase
         );
 
         getLogger("org.postgresql").setLevel(FINEST);
-        
+
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            throw new RuntimeException("No se puede establecer una conexion. Revisar si el servidor PostgreSQL esta corriendo.", e);
+            throw new RuntimeException("No se puede establecer una conexión. Revisar si el servidor PostgreSQL está corriendo.", e);
         }
     }
+
+    private void createDatabaseIfNotExists(String databaseName, String user, String password, String host, String port) {
+        String url = String.format("jdbc:postgresql://%s:%s/postgres", host, port);
+        try (var connection = DriverManager.getConnection(url, user, password);
+             var statement = connection.createStatement()) {
+
+            String checkDbQuery = "SELECT 1 FROM pg_database WHERE datname = '" + databaseName + "'";
+            var resultSet = statement.executeQuery(checkDbQuery);
+            if (!resultSet.next()) {
+                statement.executeUpdate("CREATE DATABASE " + databaseName);
+                getLogger("JDBCConnector").info("Base de datos creada: " + databaseName);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar/crear la base de datos", e);
+        }
+    }
+
 
     /**
      * Cierra una conexion con la base de datos (libera los recursos utilizados por la misma)
