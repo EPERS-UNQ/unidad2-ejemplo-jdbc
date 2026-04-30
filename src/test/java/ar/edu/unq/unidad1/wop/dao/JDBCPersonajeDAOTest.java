@@ -54,7 +54,7 @@ public class JDBCPersonajeDAOTest {
         assertEquals(maguito.getPesoMaximo(), otroMaguito.getPesoMaximo());
         assertEquals(maguito.getVida(), otroMaguito.getVida());
         assertEquals(maguito.getXp(), otroMaguito.getXp());
-//        assertEquals(this.maguito.getInventario().size(), otroMaguito.getInventario().size());
+        assertEquals(this.maguito.getInventario().size(), otroMaguito.getInventario().size());
 
         //Pero no son el mismo objeto =(
         //A esto nos referimos con "perdida de identidad"
