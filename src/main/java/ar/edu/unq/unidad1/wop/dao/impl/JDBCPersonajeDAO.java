@@ -1,6 +1,7 @@
 package ar.edu.unq.unidad1.wop.dao.impl;
 
 import ar.edu.unq.unidad1.wop.dao.PersonajeDAO;
+import ar.edu.unq.unidad1.wop.modelo.Item;
 import ar.edu.unq.unidad1.wop.modelo.Personaje;
 
 import java.nio.file.Files;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Una implementacion de [PersonajeDAO] que persiste
@@ -21,11 +23,39 @@ public record JDBCPersonajeDAO() implements PersonajeDAO {
         JDBCConnector.getInstance().execute(conn  -> {
             try {
                 var ps = prepareInsertQueryStatement(personaje, conn);
-                return ps.execute();
+                ps.execute();
+                guardarInventario(personaje, conn);
+                return null;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    private static void guardarInventario(Personaje personaje, Connection conn) throws SQLException {
+        for (var item : personaje.getInventario()) {
+            var psItem = conn.prepareStatement(
+                    "INSERT INTO item (nombre, peso) VALUES (?, ?) ON CONFLICT (nombre, peso) DO NOTHING");
+            psItem.setString(1, item.getNombre());
+            psItem.setInt(2, item.getPeso());
+            psItem.execute();
+
+            var psSelectItem = conn.prepareStatement(
+                    "SELECT id FROM item WHERE nombre = ? AND peso = ?");
+            psSelectItem.setString(1, item.getNombre());
+            psSelectItem.setInt(2, item.getPeso());
+            var rs = psSelectItem.executeQuery();
+            if (!rs.next()) {
+                throw new RuntimeException("Item not found after insert: " + item.getNombre());
+            }
+            var itemId = rs.getInt("id");
+
+            var psInv = conn.prepareStatement(
+                    "INSERT INTO inventario (personaje_nombre, item_id) VALUES (?, ?) ON CONFLICT DO NOTHING");
+            psInv.setString(1, personaje.getNombre());
+            psInv.setInt(2, itemId);
+            psInv.execute();
+        }
     }
 
     private static PreparedStatement prepareInsertQueryStatement(Personaje personaje, Connection conn) throws SQLException {
@@ -34,7 +64,6 @@ public record JDBCPersonajeDAO() implements PersonajeDAO {
         ps.setInt(2, personaje.getPesoMaximo());
         ps.setInt(3, personaje.getXp());
         ps.setInt(4, personaje.getVida());
-        //ojo, no estamos guardando el inventario!
         return ps;
     }
 
@@ -43,11 +72,27 @@ public record JDBCPersonajeDAO() implements PersonajeDAO {
             try {
                 var ps = prepareSelectQueryStatement(nombre, conn);
                 var resultSet = ps.executeQuery();
-                return buildPersonaje(nombre, resultSet);
+                var personaje = buildPersonaje(nombre, resultSet);
+                if (personaje != null) {
+                    recuperarInventario(nombre, conn).forEach(personaje.getInventario()::add);
+                }
+                return personaje;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    private static Set<Item> recuperarInventario(String nombre, Connection conn) throws SQLException {
+        var ps = conn.prepareStatement(
+                "SELECT i.nombre, i.peso FROM inventario inv JOIN item i ON i.id = inv.item_id WHERE inv.personaje_nombre = ?");
+        ps.setString(1, nombre);
+        var rs = ps.executeQuery();
+        var items = new HashSet<Item>();
+        while (rs.next()) {
+            items.add(new Item(rs.getString("nombre"), rs.getInt("peso")));
+        }
+        return items;
     }
 
     private static PreparedStatement prepareSelectQueryStatement(String nombre, Connection conn) throws SQLException {
@@ -97,8 +142,8 @@ public record JDBCPersonajeDAO() implements PersonajeDAO {
             var initializeScript = Files.readString(Paths.get(uri));
             JDBCConnector.getInstance().execute(conn -> {
                 try {
-                    var ps = conn.prepareStatement(initializeScript);
-                    return ps.execute();
+                    conn.createStatement().execute(initializeScript);
+                    return null;
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
