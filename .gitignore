@@ -1,9 +1,9 @@
-.classpath
-.settings
-.project
+.cpcache/
+.lsp/.cache/
+.clj-kondo/.cache/
 /target
 /data/*
-.gradle/
-build/*
 .idea
 /out/*
+*.log
+postgresql.log
