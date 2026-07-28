@@ -1,7 +1,7 @@
-package ar.edu.unq.unidad1.wop.dao.impl;
+package ar.edu.unq.unidad1.persistence.impl;
 
-import ar.edu.unq.unidad1.wop.dao.PersonajeDAO;
-import ar.edu.unq.unidad1.wop.modelo.Personaje;
+import ar.edu.unq.unidad1.persistence.PersonajeDAO;
+import ar.edu.unq.unidad1.modelo.Personaje;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

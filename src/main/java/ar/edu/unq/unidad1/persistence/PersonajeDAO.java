@@ -1,6 +1,6 @@
-package ar.edu.unq.unidad1.wop.dao;
+package ar.edu.unq.unidad1.persistence;
 
-import ar.edu.unq.unidad1.wop.modelo.Personaje;
+import ar.edu.unq.unidad1.modelo.Personaje;
 
 /**
  * Tiene la responsabilidad de guardar y recuperar personajes desde

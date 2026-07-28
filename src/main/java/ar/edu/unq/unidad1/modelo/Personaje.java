@@ -1,6 +1,6 @@
-package ar.edu.unq.unidad1.wop.modelo;
+package ar.edu.unq.unidad1.modelo;
 
-import ar.edu.unq.unidad1.wop.modelo.exception.MuchoPesoException;
+import ar.edu.unq.unidad1.modelo.exception.MuchoPesoException;
 
 import java.util.Set;
 

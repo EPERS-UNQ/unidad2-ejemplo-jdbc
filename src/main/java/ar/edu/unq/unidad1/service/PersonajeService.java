@@ -1,6 +1,6 @@
-package ar.edu.unq.unidad1.wop.service;
+package ar.edu.unq.unidad1.service;
 
-import ar.edu.unq.unidad1.wop.modelo.Personaje;
+import ar.edu.unq.unidad1.modelo.Personaje;
 
 /**
  * Tiene la responsabilidad de orquestar (coordinar)

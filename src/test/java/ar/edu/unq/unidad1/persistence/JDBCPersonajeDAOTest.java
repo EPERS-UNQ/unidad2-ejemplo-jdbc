@@ -1,17 +1,15 @@
-package ar.edu.unq.unidad1.wop.dao;
+package ar.edu.unq.unidad1.persistence;
 
-import ar.edu.unq.unidad1.wop.dao.impl.JDBCPersonajeDAO;
-import ar.edu.unq.unidad1.wop.modelo.Item;
-import ar.edu.unq.unidad1.wop.modelo.Personaje;
+import ar.edu.unq.unidad1.persistence.impl.JDBCPersonajeDAO;
+import ar.edu.unq.unidad1.modelo.Item;
+import ar.edu.unq.unidad1.modelo.Personaje;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 
-import static java.util.logging.LogManager.getLogManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JDBCPersonajeDAOTest {

@@ -1,10 +1,10 @@
-package ar.edu.unq.unidad1.wop.dao;
+package ar.edu.unq.unidad1.service;
 
-import ar.edu.unq.unidad1.wop.dao.impl.JDBCPersonajeDAO;
-import ar.edu.unq.unidad1.wop.modelo.Item;
-import ar.edu.unq.unidad1.wop.modelo.Personaje;
-import ar.edu.unq.unidad1.wop.service.PersonajeService;
-import ar.edu.unq.unidad1.wop.service.impl.PersonajeServiceImpl;
+import ar.edu.unq.unidad1.persistence.PersonajeDAO;
+import ar.edu.unq.unidad1.persistence.impl.JDBCPersonajeDAO;
+import ar.edu.unq.unidad1.modelo.Item;
+import ar.edu.unq.unidad1.modelo.Personaje;
+import ar.edu.unq.unidad1.service.impl.PersonajeServiceImpl;
 import org.junit.jupiter.api.*;
 
 import java.util.HashSet;
