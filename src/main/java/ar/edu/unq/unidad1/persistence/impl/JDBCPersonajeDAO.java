@@ -15,7 +15,7 @@ import java.util.HashSet;
  * Una implementacion de [PersonajeDAO] que persiste
  * en una base de datos relacional utilizando JDBC
  */
-public record JDBCPersonajeDAO() implements PersonajeDAO {
+public class JDBCPersonajeDAO implements PersonajeDAO {
 
     public void guardar(Personaje personaje) {
         JDBCConnector.getInstance().execute(conn  -> {

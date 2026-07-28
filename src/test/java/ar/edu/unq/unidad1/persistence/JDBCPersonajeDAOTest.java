@@ -13,7 +13,7 @@ import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JDBCPersonajeDAOTest {
-    private PersonajeDAO dao = new JDBCPersonajeDAO();
+    private final PersonajeDAO dao = new JDBCPersonajeDAO();
     private Personaje maguito;
 
 //    Descomentar para ver logs.
