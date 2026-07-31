@@ -1,4 +1,4 @@
-package ar.edu.unq.unidad1.wop.modelo;
+package ar.edu.unq.unidad1.modelo;
 
 public class Item {
 

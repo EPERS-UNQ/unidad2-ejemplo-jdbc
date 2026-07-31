@@ -1,8 +1,8 @@
-package ar.edu.unq.unidad1.wop.service.impl;
+package ar.edu.unq.unidad1.service.impl;
 
-import ar.edu.unq.unidad1.wop.dao.PersonajeDAO;
-import ar.edu.unq.unidad1.wop.modelo.Personaje;
-import ar.edu.unq.unidad1.wop.service.PersonajeService;
+import ar.edu.unq.unidad1.persistence.PersonajeDAO;
+import ar.edu.unq.unidad1.modelo.Personaje;
+import ar.edu.unq.unidad1.service.PersonajeService;
 
 public class PersonajeServiceImpl implements PersonajeService {
     private PersonajeDAO personajeDAO;

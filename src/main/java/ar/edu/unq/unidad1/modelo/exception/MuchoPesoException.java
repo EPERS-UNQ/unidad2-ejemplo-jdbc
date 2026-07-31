@@ -1,7 +1,7 @@
-package ar.edu.unq.unidad1.wop.modelo.exception;
+package ar.edu.unq.unidad1.modelo.exception;
 
-import ar.edu.unq.unidad1.wop.modelo.Item;
-import ar.edu.unq.unidad1.wop.modelo.Personaje;
+import ar.edu.unq.unidad1.modelo.Item;
+import ar.edu.unq.unidad1.modelo.Personaje;
 
 public class MuchoPesoException extends RuntimeException {
     public MuchoPesoException(Personaje personaje, Item item) {

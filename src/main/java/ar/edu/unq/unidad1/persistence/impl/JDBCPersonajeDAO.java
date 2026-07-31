@@ -1,7 +1,7 @@
-package ar.edu.unq.unidad1.wop.dao.impl;
+package ar.edu.unq.unidad1.persistence.impl;
 
-import ar.edu.unq.unidad1.wop.dao.PersonajeDAO;
-import ar.edu.unq.unidad1.wop.modelo.Personaje;
+import ar.edu.unq.unidad1.persistence.PersonajeDAO;
+import ar.edu.unq.unidad1.modelo.Personaje;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,7 +15,7 @@ import java.util.HashSet;
  * Una implementacion de [PersonajeDAO] que persiste
  * en una base de datos relacional utilizando JDBC
  */
-public record JDBCPersonajeDAO() implements PersonajeDAO {
+public class JDBCPersonajeDAO implements PersonajeDAO {
 
     public void guardar(Personaje personaje) {
         JDBCConnector.getInstance().execute(conn  -> {
@@ -57,19 +57,20 @@ public record JDBCPersonajeDAO() implements PersonajeDAO {
     }
 
     private static Personaje buildPersonaje(String nombre, ResultSet resultSet) throws SQLException {
-        Personaje personaje = null;
-        while (resultSet.next()) {
-            //si personaje no es null aca significa que el while dio mas de una vuelta, eso
-            //suele pasar cuando el resultado (resultset) tiene mas de un elemento.
-            if (personaje != null) {
-                throw new RuntimeException(String.format("Existe mas de un personaje con el nombre %s", nombre));
-            }
-            personaje = new Personaje(nombre,
-                    resultSet.getInt("pesoMaximo"),
-                    resultSet.getInt("xp"),
-                    resultSet.getInt("vida"),
-                    new HashSet<>()
-            );
+        /* Si no se encontró NINGÚN resultado, devolvemos null */
+        if (!resultSet.next()) { return null; }
+
+        /* Armamos el personaje con el primer resultado del resultSet */
+        Personaje personaje = new Personaje(nombre,
+                resultSet.getInt("pesoMaximo"),
+                resultSet.getInt("xp"),
+                resultSet.getInt("vida"),
+                new HashSet<>()
+        );
+
+        /* Si ya se encontró un resultado, y hay otro, revienta todo */
+        if (resultSet.next()) {
+            throw new RuntimeException(String.format("Existe mas de un personaje con el nombre %s", nombre));
         }
         return personaje;
     }
